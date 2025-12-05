@@ -1,7 +1,7 @@
-import axios from "axios";
-import type { Note } from "../types/note";
+import axios from 'axios';
+import type { Note } from '../types/note';
 
-axios.defaults.baseURL = "https://notehub-public.goit.study/api";
+axios.defaults.baseURL = 'https://notehub-public.goit.study/api';
 const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 interface FetchNotesResponse {
@@ -17,23 +17,25 @@ interface NewNote {
 
 export async function fetchNotes(
   searchValue: string,
-  page: number
+  page: number,
+  tag?: string
 ): Promise<FetchNotesResponse> {
-  const { data } = await axios.get<FetchNotesResponse>("/notes", {
+  const { data } = await axios.get<FetchNotesResponse>('/notes', {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
     params: {
-      ...(searchValue !== "" && { search: searchValue }),
+      ...(searchValue !== '' && { search: searchValue }),
       page,
       perPage: 12,
+      ...(tag && { tag }),
     },
   });
   return data;
 }
 
 export async function createNote(newNote: NewNote): Promise<Note> {
-  const { data } = await axios.post<Note>("/notes", newNote, {
+  const { data } = await axios.post<Note>('/notes', newNote, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
@@ -51,10 +53,19 @@ export async function deleteNote(id: string): Promise<Note> {
 }
 
 export async function fetchNoteById(id: string): Promise<Note> {
-  const { data } = await axios.get(`/notes/${id}`, {
+  const { data } = await axios.get<Note>(`/notes/${id}`, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
   });
   return data;
 }
+
+// export async function fetchCategories(): Promise<Category[]> {
+//   const { data } = await axios.get<Category[]>('/categories', {
+//     headers: {
+//       Authorization: `Bearer ${TOKEN}`,
+//     },
+//   });
+//   return data;
+// }
