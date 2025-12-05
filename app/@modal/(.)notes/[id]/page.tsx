@@ -1,9 +1,15 @@
-// interface Props {
-//   params: Promise<{ id: string }>;
-// }
+import Modal from '@/components/Modal/Modal';
+import { fetchNoteById } from '@/lib/api';
 
-// const NotePreview = async ({ params }: Props) => {
-//   return;
-// };
+interface Props {
+  params: Promise<{ id: string }>;
+}
 
-// export default NotePreview;
+const NotePreview = async ({ params }: Props) => {
+  const { id } = await params;
+  const note = await fetchNoteById(id);
+
+  return <div></div>;
+};
+
+export default NotePreview;
