@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import css from './Modal.module.css';
 import { useEffect } from 'react';
 
@@ -23,7 +24,7 @@ function Modal({ onClose, children }: ModalProps) {
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
       onClick={handleBackdropClose}
       className={css.backdrop}
@@ -31,7 +32,8 @@ function Modal({ onClose, children }: ModalProps) {
       aria-modal="true"
     >
       <div className={css.modal}>{children}</div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

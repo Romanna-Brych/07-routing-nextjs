@@ -60,12 +60,3 @@ export async function fetchNoteById(id: string): Promise<Note> {
   });
   return data;
 }
-
-// export async function fetchCategories(): Promise<Category[]> {
-//   const { data } = await axios.get<Category[]>('/categories', {
-//     headers: {
-//       Authorization: `Bearer ${TOKEN}`,
-//     },
-//   });
-//   return data;
-// }
